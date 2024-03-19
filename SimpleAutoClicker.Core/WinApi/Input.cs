@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace SimpleAutoClicker
+namespace SimpleAutoClicker.Core.WinApi
 {
     public enum InputType
     {
@@ -35,10 +35,10 @@ namespace SimpleAutoClicker
         public uint mouseData;
         public uint dwFlags;
         public uint time;
-        public IntPtr dwExtraInfo;
+        public nint dwExtraInfo;
     }
 
-    
+
     [StructLayout(LayoutKind.Sequential)]
     public struct KEYBDINPUT
     {
@@ -46,7 +46,7 @@ namespace SimpleAutoClicker
         public ushort wScan;
         public uint dwFlags;
         public uint time;
-        public IntPtr dwExtraInfo;
+        public nint dwExtraInfo;
     }
 
     [StructLayout(LayoutKind.Sequential)]

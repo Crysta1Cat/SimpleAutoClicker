@@ -1,29 +1,46 @@
-﻿using SimpleAutoClicker;
-using System.Runtime.InteropServices;
+﻿
+using KeyAPI;
+using SimpleAutoClicker;
+using System.Diagnostics;
+using static SimpleAutoClicker.User32;
+
 
 public class Program
 {
-    [DllImport("User32.dll")]
-    private static extern short GetAsyncKeyState(System.Int32 vKey);
-    
-
-    // Define the INPUT structure
-    
-
     public static void Main()
     {
-        ActionMouseClick act = new ActionMouseClick(MouseKeyCode.MOUSEEVENTF_RIGHTDOWN);
+        ActionKeysPressWithModifiers act = new ActionKeysPressWithModifiers(new List<VirtualKeyCode> { VirtualKeyCode.VK_CONTROL }, new List<VirtualKeyCode> { VirtualKeyCode.VK_A });
 
+        KeystrokeAPI keystroke = new KeystrokeAPI();
+        keystroke.CreateKeyboardHook((character) => { Console.WriteLine(character); });
+        //ExecuteAction(act);
+
+       
         
+    }
 
+    private static void ExecuteAction(ActionKeysPressWithModifiers act)
+    {
         while (true)
         {
-           
-            if ((GetAsyncKeyState(0x4) != 0))
+            NOP((double)1);
+            if (User32.GetAsyncKeyState(4) != 0)
             {
-                Console.WriteLine(act.DoAction());
+                act.DoAction();
             }
-            
         }
     }
+
+
+    private static void NOP(double durationSeconds)
+    {
+        var durationTicks = Math.Round(durationSeconds * Stopwatch.Frequency);
+        var sw = Stopwatch.StartNew();
+
+        while (sw.ElapsedTicks < durationTicks)
+        {
+
+        }
+    }
+
 }
